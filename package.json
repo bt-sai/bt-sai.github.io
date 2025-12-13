@@ -6,7 +6,7 @@
   "description": "Personal portfolio website for Tarun Sai - Senior Applied AI Scientist",
   "author": "Tarun Sai <tarunsaib1997@gmail.com>",
   "license": "MIT",
-  "homepage": "https://tarunsai.github.io/",
+  "homepage": "https://tarunsaib1997.github.io/",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
