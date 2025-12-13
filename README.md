@@ -72,19 +72,56 @@ npm run dev
 
 ## 📦 Deployment
 
-### GitHub Pages (Automated)
+### Setting Up GitHub Repository
 
-The repository includes a GitHub Actions workflow that automatically deploys to GitHub Pages on every push to the `main` branch.
+1. **Create a new repository on GitHub:**
+   - Go to [GitHub](https://github.com/new)
+   - Repository name: `Personal_page` (or your preferred name)
+   - Set visibility to **Private** (or Public if you prefer)
+   - **Do NOT** initialize with README, .gitignore, or license (we already have these)
+   - Click "Create repository"
 
-1. Go to repository Settings > Pages
-2. Set Source to "GitHub Actions"
-3. Push to `main` branch
+2. **Push your code to GitHub:**
+   ```bash
+   # Add the remote repository (replace YOUR_USERNAME with your GitHub username)
+   git remote add origin https://github.com/YOUR_USERNAME/Personal_page.git
+   
+   # Rename branch to main if needed
+   git branch -M main
+   
+   # Push to GitHub
+   git push -u origin main
+   ```
 
-### Manual Deployment
+### GitHub Pages Setup
+
+**Important Note:** GitHub Pages for private repositories requires a paid GitHub plan (GitHub Pro, Team, or Enterprise). If you have a free account, you'll need to make the repository public to use GitHub Pages.
+
+1. **Enable GitHub Pages:**
+   - Go to your repository on GitHub
+   - Navigate to **Settings** > **Pages**
+   - Under **Source**, select **GitHub Actions**
+   - Save the settings
+
+2. **Automatic Deployment:**
+   - The repository includes a GitHub Actions workflow (`.github/workflows/deploy.yml`)
+   - It automatically deploys to GitHub Pages on every push to the `main` branch
+   - After the first push, go to **Actions** tab to see the deployment progress
+   - Once complete, your site will be available at: `https://YOUR_USERNAME.github.io/Personal_page/`
+
+3. **Update base path in vite.config.ts:**
+   - If your repository name is different from `Personal_page`, update the `base` field in `vite.config.ts`
+   - Currently set to `base: './'` which works for GitHub Pages
+
+### Manual Deployment (Alternative)
+
+If you prefer manual deployment:
 
 ```bash
 npm run deploy
 ```
+
+This uses `gh-pages` to deploy the `dist` folder directly.
 
 ## 🎨 Customization
 
