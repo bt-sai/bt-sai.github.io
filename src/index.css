@@ -1,0 +1,313 @@
+@import "tailwindcss";
+@import '@fontsource/space-grotesk/400.css';
+@import '@fontsource/space-grotesk/500.css';
+@import '@fontsource/space-grotesk/600.css';
+@import '@fontsource/space-grotesk/700.css';
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/500.css';
+
+/* Tailwind v4 Theme Configuration */
+@theme {
+  /* Font Families */
+  --font-sans: 'Space Grotesk', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  /* Custom Colors - Rich midnight palette */
+  --color-midnight-50: #f0f4f8;
+  --color-midnight-100: #d9e2ec;
+  --color-midnight-200: #bcccdc;
+  --color-midnight-300: #9fb3c8;
+  --color-midnight-400: #829ab1;
+  --color-midnight-500: #627d98;
+  --color-midnight-600: #486581;
+  --color-midnight-700: #334e68;
+  --color-midnight-800: #243b53;
+  --color-midnight-900: #102a43;
+  --color-midnight-950: #0a1929;
+  
+  /* Accent Colors - Warm gold */
+  --color-accent-50: #fffbea;
+  --color-accent-100: #fff3c4;
+  --color-accent-200: #fce588;
+  --color-accent-300: #fadb5f;
+  --color-accent-400: #f7c948;
+  --color-accent-500: #f0b429;
+  --color-accent-600: #de911d;
+  --color-accent-700: #cb6e17;
+  --color-accent-800: #b44d12;
+  --color-accent-900: #8d2b0b;
+  
+  /* Coral Colors */
+  --color-coral-400: #ff6b6b;
+  --color-coral-500: #ee5a5a;
+  --color-coral-600: #d64545;
+  
+  /* Teal Colors */
+  --color-teal-400: #4ecdc4;
+  --color-teal-500: #3cbcb2;
+  --color-teal-600: #2da69d;
+  
+  /* Animations */
+  --animate-gradient: gradient 8s ease infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  
+  @keyframes gradient {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+}
+
+/* CSS Variables for Theme - Default is dark */
+:root {
+  --bg-primary: var(--color-midnight-950);
+  --bg-secondary: var(--color-midnight-900);
+  --bg-card: rgba(255, 255, 255, 0.05);
+  --text-primary: var(--color-midnight-100);
+  --text-secondary: var(--color-midnight-300);
+  --text-muted: var(--color-midnight-400);
+  --text-faint: var(--color-midnight-500);
+  --border-color: rgba(255, 255, 255, 0.1);
+  --border-divider: var(--color-midnight-700);
+}
+
+/* Light theme overrides */
+.light {
+  --bg-primary: var(--color-midnight-50);
+  --bg-secondary: #ffffff;
+  --bg-card: rgba(16, 42, 67, 0.05);
+  --text-primary: var(--color-midnight-900);
+  --text-secondary: var(--color-midnight-700);
+  --text-muted: var(--color-midnight-600);
+  --text-faint: var(--color-midnight-500);
+  --border-color: rgba(16, 42, 67, 0.1);
+  --border-divider: var(--color-midnight-300);
+}
+
+/* Base Styles */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Theme-aware text utilities */
+.text-themed-primary {
+  color: var(--text-primary);
+}
+
+.text-themed-secondary {
+  color: var(--text-secondary);
+}
+
+.text-themed-muted {
+  color: var(--text-muted);
+}
+
+.text-themed-faint {
+  color: var(--text-faint);
+}
+
+.bg-themed-primary {
+  background-color: var(--bg-primary);
+}
+
+.bg-themed-secondary {
+  background-color: var(--bg-secondary);
+}
+
+.bg-themed-card {
+  background-color: var(--bg-card);
+}
+
+.border-themed {
+  border-color: var(--border-color);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text-faint);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Selection */
+::selection {
+  background: color-mix(in srgb, var(--color-accent-500) 30%, transparent);
+  color: var(--color-accent-900);
+}
+
+/* Gradient Text */
+.gradient-text {
+  background: linear-gradient(
+    135deg,
+    var(--color-accent-400),
+    var(--color-coral-400),
+    var(--color-teal-400)
+  );
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient 3s ease infinite;
+}
+
+/* Glass Morphism */
+.glass {
+  backdrop-filter: blur(12px);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+}
+
+/* Animated Underline */
+.animated-underline {
+  position: relative;
+}
+
+.animated-underline::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--color-accent-500);
+  transition: width 0.3s ease;
+}
+
+.animated-underline:hover::after {
+  width: 100%;
+}
+
+/* Grid Background */
+.grid-bg {
+  background-image: 
+    linear-gradient(to right, var(--border-color) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--border-color) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* Card Hover Effect */
+.card-hover {
+  transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -20px color-mix(in srgb, var(--color-accent-500) 30%, transparent);
+}
+
+/* Section Divider */
+.section-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--border-divider),
+    transparent
+  );
+}
+
+/* Focus Styles for Accessibility */
+*:focus-visible {
+  outline: 2px solid var(--color-accent-500);
+  outline-offset: 2px;
+}
+
+/* Theme-aware component overrides */
+.light .text-midnight-100 {
+  color: var(--color-midnight-900);
+}
+
+.light .text-midnight-200 {
+  color: var(--color-midnight-800);
+}
+
+.light .text-midnight-300 {
+  color: var(--color-midnight-700);
+}
+
+.light .text-midnight-400 {
+  color: var(--color-midnight-600);
+}
+
+.light .text-midnight-500 {
+  color: var(--color-midnight-500);
+}
+
+.light .border-midnight-800 {
+  border-color: var(--color-midnight-200);
+}
+
+.light .border-midnight-600 {
+  border-color: var(--color-midnight-300);
+}
+
+.light .bg-midnight-950 {
+  background-color: var(--color-midnight-50);
+}
+
+.light .bg-midnight-900 {
+  background-color: var(--color-midnight-100);
+}
+
+.light .bg-midnight-700 {
+  background-color: var(--color-midnight-200);
+}
+
+/* Fix hover states in light mode */
+.light .hover\:text-midnight-100:hover {
+  color: var(--color-midnight-900);
+}
+
+.light .hover\:bg-white\/5:hover {
+  background-color: rgba(16, 42, 67, 0.05);
+}
+
+/* Badge overrides for light mode */
+.light .bg-accent-500\/20 {
+  background-color: rgba(240, 180, 41, 0.15);
+}
+
+.light .bg-teal-500\/20 {
+  background-color: rgba(60, 188, 178, 0.15);
+}
+
+.light .bg-coral-500\/20 {
+  background-color: rgba(238, 90, 90, 0.15);
+}
+
+/* Glass effect in light mode */
+.light .glass {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(16, 42, 67, 0.1);
+}
+
+/* Card shadow in light mode */
+.light .card-hover:hover {
+  box-shadow: 0 20px 40px -20px rgba(16, 42, 67, 0.2);
+}
