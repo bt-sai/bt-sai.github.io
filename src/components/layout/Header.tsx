@@ -130,7 +130,7 @@ export function Header() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden absolute left-4 right-4 top-full mt-2 glass rounded-xl shadow-2xl overflow-hidden"
+            className="md:hidden absolute left-4 right-4 top-full mt-2 bg-midnight-900/95 backdrop-blur-xl border border-midnight-700/50 rounded-xl shadow-2xl overflow-hidden"
           >
             <nav className="flex flex-col py-2">
               {navItems.map((item, index) => (
@@ -144,7 +144,7 @@ export function Header() {
                     'py-4 px-6 text-left text-base font-medium transition-colors active:bg-white/10 touch-manipulation cursor-pointer',
                     activeSection === item.id
                       ? 'text-accent-400 bg-accent-500/10'
-                      : 'text-midnight-300'
+                      : 'text-white/90 hover:text-white'
                   )}
                 >
                   {item.label}
