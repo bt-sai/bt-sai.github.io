@@ -1,9 +1,9 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowDown, Users, Heart, X } from 'lucide-react';
+import { ArrowDown, Users, X } from 'lucide-react';
 import { Icon } from '@iconify/react';
 import { portfolioData } from '../../data/portfolio';
-import { LinkButton } from '../ui';
+import { LinkButton, LikeButton } from '../ui';
 import { useVisitorTracking } from '../../hooks/useVisitorTracking';
 import { getThoughts, likeThought, getLikeStatus, generateFingerprint } from '../../services/xano';
 import { getXanoFileUrl } from '../../config/xano';
@@ -69,6 +69,7 @@ export function Hero() {
   const [likingId, setLikingId] = useState<number | null>(null);
   const [fingerprint, setFingerprint] = useState<string | null>(null);
   const [selectedThought, setSelectedThought] = useState<Thought | null>(null);
+  const [justLiked, setJustLiked] = useState<number | null>(null); // For celebration animation
   
   // Scroll state
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -320,6 +321,10 @@ export function Hero() {
       prev.map(t => t.id === thoughtId ? { ...t, likes_count: (t.likes_count || 0) + 1 } : t)
     );
     
+    // Trigger celebration animation
+    setJustLiked(thoughtId);
+    setTimeout(() => setJustLiked(null), 1500);
+    
     const result = await likeThought(thoughtId, fingerprint);
     
     if (!result) {
@@ -332,6 +337,7 @@ export function Hero() {
       setThoughts(prev => 
         prev.map(t => t.id === thoughtId ? { ...t, likes_count: Math.max(0, (t.likes_count || 0) - 1) } : t)
       );
+      setJustLiked(null);
     }
     
     setLikingId(null);
@@ -519,19 +525,14 @@ export function Hero() {
                             )}
                             <div className="flex items-center gap-4 text-xs text-themed-muted">
                               <time>{timeInfo.primary}</time>
-                              <motion.button
-                                onClick={() => handleLike(thought.id)}
-                                disabled={isLiked || isLiking}
-                                whileTap={{ scale: 0.9 }}
-                                animate={!isLiked ? { scale: [1, 1.15, 1] } : {}}
-                                transition={{ repeat: Infinity, repeatDelay: 4, duration: 0.5 }}
-                                className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full transition-all ${
-                                  isLiked ? 'text-red-500 bg-red-500/10' : 'text-themed-muted hover:text-red-500 hover:bg-red-500/10'
-                                }`}
-                              >
-                                <Heart size={14} className={isLiked ? 'fill-current' : ''} />
-                                <span className="font-medium">{thought.likes_count || 0}</span>
-                              </motion.button>
+                              <LikeButton
+                                isLiked={isLiked}
+                                likesCount={thought.likes_count || 0}
+                                onLike={() => handleLike(thought.id)}
+                                disabled={isLiking}
+                                size="sm"
+                                justLiked={justLiked === thought.id}
+                              />
                             </div>
                           </div>
                         </article>
@@ -560,17 +561,14 @@ export function Hero() {
                             )}
                             <div className="flex items-center gap-4 text-xs text-themed-muted">
                               <time>{timeInfo.primary}</time>
-                              <motion.button
-                                onClick={() => handleLike(thought.id)}
-                                disabled={isLiked || isLiking}
-                                whileTap={{ scale: 0.9 }}
-                                className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full transition-all ${
-                                  isLiked ? 'text-red-500 bg-red-500/10' : 'text-themed-muted hover:text-red-500 hover:bg-red-500/10'
-                                }`}
-                              >
-                                <Heart size={14} className={isLiked ? 'fill-current' : ''} />
-                                <span className="font-medium">{thought.likes_count || 0}</span>
-                              </motion.button>
+                              <LikeButton
+                                isLiked={isLiked}
+                                likesCount={thought.likes_count || 0}
+                                onLike={() => handleLike(thought.id)}
+                                disabled={isLiking}
+                                size="sm"
+                                justLiked={justLiked === thought.id}
+                              />
                             </div>
                           </div>
                         </article>
@@ -667,24 +665,14 @@ export function Hero() {
                 </div>
                 
                 {/* Like button */}
-                <motion.button
-                  onClick={() => handleLike(selectedThought.id)}
-                  disabled={likedThoughts.has(selectedThought.id) || likingId === selectedThought.id}
-                  whileTap={{ scale: 0.9 }}
-                  animate={!likedThoughts.has(selectedThought.id) ? { 
-                    scale: [1, 1.1, 1],
-                    boxShadow: ['0 0 0 0 rgba(239, 68, 68, 0)', '0 0 0 8px rgba(239, 68, 68, 0.2)', '0 0 0 0 rgba(239, 68, 68, 0)']
-                  } : {}}
-                  transition={{ repeat: Infinity, repeatDelay: 3, duration: 0.8 }}
-                  className={`flex items-center gap-2 px-5 py-2.5 rounded-full transition-all ${
-                    likedThoughts.has(selectedThought.id)
-                      ? 'bg-red-500 text-white'
-                      : 'bg-white/10 text-white hover:bg-red-500/80'
-                  }`}
-                >
-                  <Heart size={18} className={likedThoughts.has(selectedThought.id) ? 'fill-current' : ''} />
-                  <span className="text-base font-semibold">{selectedThought.likes_count || 0}</span>
-                </motion.button>
+                <LikeButton
+                  isLiked={likedThoughts.has(selectedThought.id)}
+                  likesCount={selectedThought.likes_count || 0}
+                  onLike={() => handleLike(selectedThought.id)}
+                  disabled={likingId === selectedThought.id}
+                  size="lg"
+                  justLiked={justLiked === selectedThought.id}
+                />
               </div>
             </motion.div>
           </motion.div>

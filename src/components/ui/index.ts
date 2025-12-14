@@ -3,4 +3,5 @@ export { Card, CardHeader, CardTitle, CardDescription, CardContent } from './Car
 export { Button, LinkButton } from './Button';
 export { Badge } from './Badge';
 export { BrandIcon, getSkillIcon, brandIcons } from './BrandIcon';
+export { LikeButton } from './LikeButton';
 
