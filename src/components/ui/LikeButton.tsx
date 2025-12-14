@@ -105,11 +105,11 @@ export function LikeButton({
     };
   }, [isLiked]);
 
-  // Social proof text
+  // Social proof text - encourages engagement
   const getSocialText = () => {
-    if (likesCount === 0) return 'Be first!';
-    if (likesCount === 1) return '1 like';
-    return `${likesCount}`;
+    if (likesCount === 0) return 'Be first! ❤️';
+    if (likesCount === 1) return 'Join 1 other';
+    return `Join ${likesCount} others`;
   };
 
   const baseClasses = variant === 'overlay'
