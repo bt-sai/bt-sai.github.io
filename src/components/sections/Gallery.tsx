@@ -160,6 +160,22 @@ export function Gallery() {
     }
   };
 
+  // Touch handlers (mobile)
+  const handleTouchStart = () => setIsHovering(true);
+  const handleTouchEnd = () => {
+    // Resume auto-scroll after 3 seconds of no touch
+    if (manualScrollTimeoutRef.current) {
+      clearTimeout(manualScrollTimeoutRef.current);
+    }
+    manualScrollTimeoutRef.current = setTimeout(() => {
+      setIsHovering(false);
+      setIsManualScrollMode(false);
+      if (scrollContainerRef.current) {
+        scrollContainerRef.current.scrollLeft = 0;
+      }
+    }, 3000);
+  };
+
   // Keyboard navigation for lightbox
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -251,6 +267,8 @@ export function Gallery() {
           ref={scrollContainerRef}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
           onScroll={handleScroll}
           className="overflow-x-auto scrollbar-hide"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}

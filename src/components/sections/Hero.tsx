@@ -138,7 +138,7 @@ export function Hero() {
 
   useEffect(() => {
     if (fingerprint) {
-      fetchLikeStatus();
+    fetchLikeStatus();
     }
   }, [fingerprint, fetchLikeStatus]);
 
@@ -256,7 +256,7 @@ export function Hero() {
     return () => observer.disconnect();
   }, [isManualScrollMode, hasMore, loadingMore, loadMoreThoughts]);
 
-  // Hover handlers
+  // Hover handlers (desktop)
   const handleMouseEnter = () => {
     setIsHovering(true);
     if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current);
@@ -274,6 +274,24 @@ export function Hero() {
         }
       }, 3000);
     }
+  };
+
+  // Touch handlers (mobile)
+  const handleTouchStart = () => {
+    setIsHovering(true);
+    if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current);
+  };
+
+  const handleTouchEnd = () => {
+    // Resume auto-scroll after 3 seconds of no touch
+    resumeTimeoutRef.current = setTimeout(() => {
+      setIsHovering(false);
+      setIsManualScrollMode(false);
+      const container = scrollContainerRef.current;
+      if (container) {
+        container.scrollTop = 0;
+      }
+    }, 3000);
   };
 
   useEffect(() => {
@@ -439,24 +457,24 @@ export function Hero() {
                 <div className="flex items-baseline gap-2">
                   <h3 className="text-xl font-semibold text-themed-primary">Thoughts</h3>
                   <span className="text-xs text-themed-muted">· what's on my mind</span>
-                </div>
+                      </div>
                 <div className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-emerald-500/10">
-                  <span className="relative flex h-2 w-2">
+                    <span className="relative flex h-2 w-2">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                  </span>
+                    </span>
                   <span className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold uppercase tracking-wide">live</span>
+                  </div>
                 </div>
-              </div>
 
-              {loadingThoughts ? (
-                <div className="flex-1 flex items-center justify-center">
+                {loadingThoughts ? (
+                  <div className="flex-1 flex items-center justify-center">
                   <div className="flex items-center gap-2 text-themed-muted">
                     <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
                     <span className="text-sm">Loading...</span>
+                    </div>
                   </div>
-                </div>
-              ) : thoughts.length === 0 ? (
+                ) : thoughts.length === 0 ? (
                 <div className="flex-1 flex items-center justify-center">
                   <p className="text-themed-muted text-sm italic">No thoughts shared yet</p>
                 </div>
@@ -465,6 +483,8 @@ export function Hero() {
                   ref={scrollContainerRef}
                   onMouseEnter={handleMouseEnter}
                   onMouseLeave={handleMouseLeave}
+                  onTouchStart={handleTouchStart}
+                  onTouchEnd={handleTouchEnd}
                   onScroll={handleScroll}
                   className="flex-1 overflow-y-auto scrollbar-hide"
                   style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
@@ -485,7 +505,7 @@ export function Hero() {
                                 onClick={() => setSelectedThought(thought)}
                               >
                                 <img src={getXanoFileUrl(thought.image_url)} alt="" className="w-full max-h-64 object-contain rounded-lg bg-midnight-100/50 dark:bg-midnight-800/50" loading="lazy" />
-                              </div>
+                  </div>
                             )}
                             {thought.content && (
                               <p className="text-themed-primary leading-relaxed mb-3 whitespace-pre-wrap">{thought.content}</p>
@@ -564,9 +584,9 @@ export function Hero() {
                             <span className="text-xs">You've seen all thoughts!</span>
                           </div>
                         ) : null}
-                      </div>
-                    )}
                   </div>
+                )}
+              </div>
                 </div>
               )}
             </div>
