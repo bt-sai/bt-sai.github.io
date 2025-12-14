@@ -1,9 +1,9 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowDown, Users, Heart, X } from 'lucide-react';
+import { ArrowDown, Users, X } from 'lucide-react';
 import { Icon } from '@iconify/react';
 import { portfolioData } from '../../data/portfolio';
-import { LinkButton } from '../ui';
+import { LinkButton, LikeButton } from '../ui';
 import { useVisitorTracking } from '../../hooks/useVisitorTracking';
 import { getThoughts, likeThought, getLikeStatus, generateFingerprint } from '../../services/xano';
 import { getXanoFileUrl } from '../../config/xano';
@@ -523,66 +523,16 @@ export function Hero() {
                             {thought.content && (
                               <p className="text-themed-primary leading-relaxed mb-3 whitespace-pre-wrap">{thought.content}</p>
                             )}
-                            <div className="flex items-center gap-4 text-xs text-themed-muted relative">
+                            <div className="flex items-center gap-4 text-xs text-themed-muted">
                               <time>{timeInfo.primary}</time>
-                              
-                              {/* Celebration particles when just liked */}
-                              <AnimatePresence>
-                                {justLiked === thought.id && (
-                                  <>
-                                    {[...Array(6)].map((_, i) => (
-                                      <motion.span
-                                        key={i}
-                                        initial={{ opacity: 1, scale: 0, x: 0, y: 0 }}
-                                        animate={{ 
-                                          opacity: 0, 
-                                          scale: 1,
-                                          x: (i % 2 === 0 ? 1 : -1) * (15 + Math.random() * 20),
-                                          y: -30 - Math.random() * 25,
-                                        }}
-                                        exit={{ opacity: 0 }}
-                                        transition={{ duration: 0.8, ease: "easeOut" }}
-                                        className="absolute text-amber-400 pointer-events-none"
-                                        style={{ left: '50%' }}
-                                      >
-                                        <Heart size={10} className="fill-current" />
-                                      </motion.span>
-                                    ))}
-                                  </>
-                                )}
-                              </AnimatePresence>
-                              
-                              {isLiked ? (
-                                /* Liked state - elegant gold badge */
-                                <motion.span 
-                                  initial={justLiked === thought.id ? { scale: 1.3 } : { scale: 1 }}
-                                  animate={{ scale: 1 }}
-                                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-amber-500 bg-amber-500/10 border border-amber-500/20"
-                                >
-                                  <Heart size={12} className="fill-current" />
-                                  <span className="text-xs font-medium">{thought.likes_count || 0}</span>
-                                </motion.span>
-                              ) : (
-                                /* Not liked - subtle but inviting button */
-                                <motion.button
-                                  onClick={() => handleLike(thought.id)}
-                                  disabled={isLiking}
-                                  whileTap={{ scale: 0.9 }}
-                                  whileHover={{ scale: 1.05 }}
-                                  animate={{ 
-                                    boxShadow: [
-                                      '0 0 0 0 rgba(245, 158, 11, 0)',
-                                      '0 0 0 4px rgba(245, 158, 11, 0.15)',
-                                      '0 0 0 0 rgba(245, 158, 11, 0)',
-                                    ]
-                                  }}
-                                  transition={{ repeat: Infinity, repeatDelay: 2, duration: 1.2 }}
-                                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full cursor-pointer border border-amber-500/30 text-amber-600 dark:text-amber-400 hover:bg-amber-500/10 hover:border-amber-500/50 transition-all"
-                                >
-                                  <Heart size={13} />
-                                  <span className="text-xs font-medium">{thought.likes_count || 0}</span>
-                                </motion.button>
-                              )}
+                              <LikeButton
+                                isLiked={isLiked}
+                                likesCount={thought.likes_count || 0}
+                                onLike={() => handleLike(thought.id)}
+                                disabled={isLiking}
+                                size="sm"
+                                justLiked={justLiked === thought.id}
+                              />
                             </div>
                           </div>
                         </article>
@@ -609,56 +559,16 @@ export function Hero() {
                             {thought.content && (
                               <p className="text-themed-primary leading-relaxed mb-3 whitespace-pre-wrap">{thought.content}</p>
                             )}
-                            <div className="flex items-center gap-4 text-xs text-themed-muted relative">
+                            <div className="flex items-center gap-4 text-xs text-themed-muted">
                               <time>{timeInfo.primary}</time>
-                              
-                              {/* Celebration particles */}
-                              <AnimatePresence>
-                                {justLiked === thought.id && (
-                                  <>
-                                    {[...Array(6)].map((_, i) => (
-                                      <motion.span
-                                        key={i}
-                                        initial={{ opacity: 1, scale: 0, x: 0, y: 0 }}
-                                        animate={{ 
-                                          opacity: 0, 
-                                          scale: 1,
-                                          x: (i % 2 === 0 ? 1 : -1) * (15 + Math.random() * 20),
-                                          y: -30 - Math.random() * 25,
-                                        }}
-                                        exit={{ opacity: 0 }}
-                                        transition={{ duration: 0.8, ease: "easeOut" }}
-                                        className="absolute text-amber-400 pointer-events-none"
-                                        style={{ left: '50%' }}
-                                      >
-                                        <Heart size={10} className="fill-current" />
-                                      </motion.span>
-                                    ))}
-                                  </>
-                                )}
-                              </AnimatePresence>
-                              
-                              {isLiked ? (
-                                <motion.span 
-                                  initial={justLiked === thought.id ? { scale: 1.3 } : { scale: 1 }}
-                                  animate={{ scale: 1 }}
-                                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-amber-500 bg-amber-500/10 border border-amber-500/20"
-                                >
-                                  <Heart size={12} className="fill-current" />
-                                  <span className="text-xs font-medium">{thought.likes_count || 0}</span>
-                                </motion.span>
-                              ) : (
-                                <motion.button
-                                  onClick={() => handleLike(thought.id)}
-                                  disabled={isLiking}
-                                  whileTap={{ scale: 0.9 }}
-                                  whileHover={{ scale: 1.05 }}
-                                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full cursor-pointer border border-amber-500/30 text-amber-600 dark:text-amber-400 hover:bg-amber-500/10 hover:border-amber-500/50 transition-all"
-                                >
-                                  <Heart size={13} />
-                                  <span className="text-xs font-medium">{thought.likes_count || 0}</span>
-                                </motion.button>
-                              )}
+                              <LikeButton
+                                isLiked={isLiked}
+                                likesCount={thought.likes_count || 0}
+                                onLike={() => handleLike(thought.id)}
+                                disabled={isLiking}
+                                size="sm"
+                                justLiked={justLiked === thought.id}
+                              />
                             </div>
                           </div>
                         </article>
@@ -755,66 +665,14 @@ export function Hero() {
                 </div>
                 
                 {/* Like button */}
-                <div className="relative">
-                  {/* Celebration particles for lightbox */}
-                  <AnimatePresence>
-                    {justLiked === selectedThought.id && (
-                      <>
-                        {[...Array(12)].map((_, i) => (
-                          <motion.span
-                            key={i}
-                            initial={{ opacity: 1, scale: 0, x: 0, y: 0 }}
-                            animate={{ 
-                              opacity: 0, 
-                              scale: 1.5,
-                              x: Math.cos((i / 12) * Math.PI * 2) * 50,
-                              y: Math.sin((i / 12) * Math.PI * 2) * 50 - 20,
-                            }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 1, ease: "easeOut" }}
-                            className="absolute text-amber-400 pointer-events-none"
-                            style={{ left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }}
-                          >
-                            <Heart size={14} className="fill-current" />
-                          </motion.span>
-                        ))}
-                      </>
-                    )}
-                  </AnimatePresence>
-                  
-                  {likedThoughts.has(selectedThought.id) ? (
-                    /* Liked state - elegant gold badge */
-                    <motion.span 
-                      initial={justLiked === selectedThought.id ? { scale: 1.4 } : { scale: 1 }}
-                      animate={{ scale: 1 }}
-                      transition={{ type: "spring", stiffness: 300, damping: 15 }}
-                      className="flex items-center gap-2 px-5 py-2.5 rounded-full text-amber-400 bg-amber-500/15 border border-amber-500/30"
-                    >
-                      <Heart size={18} className="fill-current" />
-                      <span className="text-base font-medium">{selectedThought.likes_count || 0} liked</span>
-                    </motion.span>
-                  ) : (
-                    /* Not liked - professional amber button */
-                    <motion.button
-                      onClick={() => handleLike(selectedThought.id)}
-                      disabled={likingId === selectedThought.id}
-                      whileTap={{ scale: 0.95 }}
-                      whileHover={{ scale: 1.02 }}
-                      animate={{ 
-                        boxShadow: [
-                          '0 0 0 0 rgba(245, 158, 11, 0)',
-                          '0 0 0 8px rgba(245, 158, 11, 0.15)',
-                          '0 0 0 0 rgba(245, 158, 11, 0)',
-                        ]
-                      }}
-                      transition={{ repeat: Infinity, repeatDelay: 2, duration: 1.5 }}
-                      className="flex items-center gap-2 px-6 py-3 rounded-full cursor-pointer border-2 border-amber-500/40 text-amber-400 hover:bg-amber-500/10 hover:border-amber-500/60 transition-all"
-                    >
-                      <Heart size={20} />
-                      <span className="text-lg font-medium">Like · {selectedThought.likes_count || 0}</span>
-                    </motion.button>
-                  )}
-                </div>
+                <LikeButton
+                  isLiked={likedThoughts.has(selectedThought.id)}
+                  likesCount={selectedThought.likes_count || 0}
+                  onLike={() => handleLike(selectedThought.id)}
+                  disabled={likingId === selectedThought.id}
+                  size="lg"
+                  justLiked={justLiked === selectedThought.id}
+                />
               </div>
             </motion.div>
           </motion.div>
