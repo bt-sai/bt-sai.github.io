@@ -313,15 +313,18 @@ export function Gallery() {
                     }}
                     disabled={likedPhotos.has(thought.id) || likingId === thought.id}
                     whileTap={{ scale: 0.9 }}
-                    animate={!likedPhotos.has(thought.id) ? { scale: [1, 1.1, 1] } : {}}
-                    transition={{ repeat: Infinity, repeatDelay: 3, duration: 0.5 }}
-                    className={`absolute top-3 right-3 flex items-center gap-1.5 px-3 py-1.5 rounded-full backdrop-blur-sm transition-all ${
+                    animate={!likedPhotos.has(thought.id) ? { 
+                      scale: [1, 1.2, 1, 1.15, 1],
+                      rotate: [0, -5, 5, -3, 0],
+                    } : {}}
+                    transition={{ repeat: Infinity, repeatDelay: 2, duration: 0.8 }}
+                    className={`absolute top-3 right-3 flex items-center gap-1.5 px-3 py-1.5 rounded-full backdrop-blur-sm transition-all cursor-pointer ${
                       likedPhotos.has(thought.id)
-                        ? 'bg-red-500 text-white'
-                        : 'bg-white/20 text-white hover:bg-red-500'
+                        ? 'bg-red-500 text-white shadow-lg shadow-red-500/50'
+                        : 'bg-red-500/30 text-white border border-red-500/50 hover:bg-red-500'
                     }`}
                   >
-                    <Heart size={14} className={likedPhotos.has(thought.id) ? 'fill-current' : ''} />
+                    <Heart size={14} className={likedPhotos.has(thought.id) ? 'fill-current' : 'animate-pulse'} />
                     <span className="text-sm font-medium">{thought.likes_count || 0}</span>
                   </motion.button>
                   
@@ -368,13 +371,13 @@ export function Gallery() {
                     }}
                     disabled={likedPhotos.has(thought.id) || likingId === thought.id}
                     whileTap={{ scale: 0.9 }}
-                    className={`absolute top-3 right-3 flex items-center gap-1.5 px-3 py-1.5 rounded-full backdrop-blur-sm transition-all ${
+                    className={`absolute top-3 right-3 flex items-center gap-1.5 px-3 py-1.5 rounded-full backdrop-blur-sm transition-all cursor-pointer ${
                       likedPhotos.has(thought.id)
-                        ? 'bg-red-500 text-white'
-                        : 'bg-white/20 text-white hover:bg-red-500'
+                        ? 'bg-red-500 text-white shadow-lg shadow-red-500/50'
+                        : 'bg-red-500/30 text-white border border-red-500/50 hover:bg-red-500'
                     }`}
                   >
-                    <Heart size={14} className={likedPhotos.has(thought.id) ? 'fill-current' : ''} />
+                    <Heart size={14} className={likedPhotos.has(thought.id) ? 'fill-current' : 'animate-pulse'} />
                     <span className="text-sm font-medium">{thought.likes_count || 0}</span>
                   </motion.button>
                   
@@ -486,18 +489,23 @@ export function Gallery() {
                     disabled={likedPhotos.has(selectedThought.id) || likingId === selectedThought.id}
                     whileTap={{ scale: 0.9 }}
                     animate={!likedPhotos.has(selectedThought.id) ? { 
-                      scale: [1, 1.1, 1],
-                      boxShadow: ['0 0 0 0 rgba(239, 68, 68, 0)', '0 0 0 8px rgba(239, 68, 68, 0.2)', '0 0 0 0 rgba(239, 68, 68, 0)']
+                      scale: [1, 1.2, 1, 1.15, 1],
+                      rotate: [0, -5, 5, -3, 0],
+                      boxShadow: [
+                        '0 0 0 0 rgba(239, 68, 68, 0)', 
+                        '0 0 20px 5px rgba(239, 68, 68, 0.4)', 
+                        '0 0 0 0 rgba(239, 68, 68, 0)'
+                      ]
                     } : {}}
-                    transition={{ repeat: Infinity, repeatDelay: 3, duration: 0.8 }}
-                    className={`flex items-center gap-2 px-5 py-2.5 rounded-full transition-all ${
+                    transition={{ repeat: Infinity, repeatDelay: 2, duration: 0.8 }}
+                    className={`flex items-center gap-2 px-6 py-3 rounded-full transition-all cursor-pointer ${
                       likedPhotos.has(selectedThought.id)
-                        ? 'bg-red-500 text-white'
-                        : 'bg-white/10 text-white hover:bg-red-500/80'
+                        ? 'bg-red-500 text-white shadow-lg shadow-red-500/50'
+                        : 'bg-red-500/20 text-white border-2 border-red-500/50 hover:bg-red-500 hover:border-red-500'
                     }`}
                   >
-                    <Heart size={18} className={likedPhotos.has(selectedThought.id) ? 'fill-current' : ''} />
-                    <span className="text-base font-semibold">{selectedThought.likes_count || 0}</span>
+                    <Heart size={20} className={likedPhotos.has(selectedThought.id) ? 'fill-current' : 'animate-pulse'} />
+                    <span className="text-lg font-bold">{selectedThought.likes_count || 0}</span>
                   </motion.button>
                 </div>
               </div>

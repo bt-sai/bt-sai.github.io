@@ -613,11 +613,11 @@ export function AdminThoughts() {
               <div className="relative">
                 <LinkIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-midnight-400" size={16} />
                 <input
-                  type="url"
+                  type="text"
                   value={imageUrl}
                   onChange={(e) => setImageUrl(e.target.value)}
                   className="w-full pl-10 pr-4 py-2 rounded-lg bg-midnight-800 border border-midnight-700 text-midnight-100 focus:outline-none focus:ring-2 focus:ring-accent-500"
-                  placeholder="https://example.com/image.jpg"
+                  placeholder="https://example.com/image.jpg or /vault/..."
                   disabled={uploading}
                 />
               </div>
@@ -1023,11 +1023,11 @@ export function AdminThoughts() {
                     <div className="relative">
                       <LinkIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-midnight-400" size={16} />
                       <input
-                        type="url"
+                        type="text"
                         value={editImageUrl}
                         onChange={(e) => setEditImageUrl(e.target.value)}
                         className="w-full pl-10 pr-4 py-2 rounded-lg bg-midnight-800 border border-midnight-700 text-midnight-100 focus:outline-none focus:ring-2 focus:ring-accent-500"
-                        placeholder="https://example.com/image.jpg"
+                        placeholder="https://example.com/image.jpg or /vault/..."
                         disabled={editUploading}
                       />
                     </div>
