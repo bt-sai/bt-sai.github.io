@@ -519,24 +519,29 @@ export function Hero() {
                             )}
                             <div className="flex items-center gap-4 text-xs text-themed-muted">
                               <time>{timeInfo.primary}</time>
-                              <motion.button
-                                onClick={() => handleLike(thought.id)}
-                                disabled={isLiked || isLiking}
-                                whileTap={{ scale: 0.9 }}
-                                animate={!isLiked ? { 
-                                  scale: [1, 1.2, 1, 1.15, 1],
-                                  rotate: [0, -5, 5, -3, 0],
-                                } : {}}
-                                transition={{ repeat: Infinity, repeatDelay: 2, duration: 0.8 }}
-                                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all cursor-pointer ${
-                                  isLiked 
-                                    ? 'text-red-500 bg-red-500/20 shadow-lg shadow-red-500/20' 
-                                    : 'text-red-400 bg-red-500/10 hover:text-red-500 hover:bg-red-500/20 hover:shadow-lg hover:shadow-red-500/20'
-                                }`}
-                              >
-                                <Heart size={14} className={isLiked ? 'fill-current' : 'animate-pulse'} />
-                                <span className="font-medium">{thought.likes_count || 0}</span>
-                              </motion.button>
+                              {isLiked ? (
+                                /* Liked state - subtle badge, no hover effect */
+                                <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-red-400/70 bg-red-500/5">
+                                  <Heart size={12} className="fill-current" />
+                                  <span className="text-xs">{thought.likes_count || 0}</span>
+                                </span>
+                              ) : (
+                                /* Not liked - eye-catching animated button */
+                                <motion.button
+                                  onClick={() => handleLike(thought.id)}
+                                  disabled={isLiking}
+                                  whileTap={{ scale: 0.85 }}
+                                  animate={{ 
+                                    scale: [1, 1.15, 1, 1.1, 1],
+                                    y: [0, -2, 0, -1, 0],
+                                  }}
+                                  transition={{ repeat: Infinity, repeatDelay: 1.5, duration: 0.6 }}
+                                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full cursor-pointer bg-gradient-to-r from-red-500 to-pink-500 text-white shadow-lg shadow-red-500/30 hover:shadow-xl hover:shadow-red-500/40 hover:scale-105 transition-all"
+                                >
+                                  <Heart size={14} className="animate-pulse" />
+                                  <span className="font-semibold text-xs">{thought.likes_count || 0}</span>
+                                </motion.button>
+                              )}
                             </div>
                           </div>
                         </article>
@@ -565,19 +570,22 @@ export function Hero() {
                             )}
                             <div className="flex items-center gap-4 text-xs text-themed-muted">
                               <time>{timeInfo.primary}</time>
-                              <motion.button
-                                onClick={() => handleLike(thought.id)}
-                                disabled={isLiked || isLiking}
-                                whileTap={{ scale: 0.9 }}
-                                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all cursor-pointer ${
-                                  isLiked 
-                                    ? 'text-red-500 bg-red-500/20 shadow-lg shadow-red-500/20' 
-                                    : 'text-red-400 bg-red-500/10 hover:text-red-500 hover:bg-red-500/20 hover:shadow-lg hover:shadow-red-500/20'
-                                }`}
-                              >
-                                <Heart size={14} className={isLiked ? 'fill-current' : 'animate-pulse'} />
-                                <span className="font-medium">{thought.likes_count || 0}</span>
-                              </motion.button>
+                              {isLiked ? (
+                                <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-red-400/70 bg-red-500/5">
+                                  <Heart size={12} className="fill-current" />
+                                  <span className="text-xs">{thought.likes_count || 0}</span>
+                                </span>
+                              ) : (
+                                <motion.button
+                                  onClick={() => handleLike(thought.id)}
+                                  disabled={isLiking}
+                                  whileTap={{ scale: 0.85 }}
+                                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full cursor-pointer bg-gradient-to-r from-red-500 to-pink-500 text-white shadow-lg shadow-red-500/30 hover:shadow-xl hover:shadow-red-500/40 hover:scale-105 transition-all"
+                                >
+                                  <Heart size={14} className="animate-pulse" />
+                                  <span className="font-semibold text-xs">{thought.likes_count || 0}</span>
+                                </motion.button>
+                              )}
                             </div>
                           </div>
                         </article>
@@ -674,29 +682,29 @@ export function Hero() {
                 </div>
                 
                 {/* Like button */}
-                <motion.button
-                  onClick={() => handleLike(selectedThought.id)}
-                  disabled={likedThoughts.has(selectedThought.id) || likingId === selectedThought.id}
-                  whileTap={{ scale: 0.9 }}
-                  animate={!likedThoughts.has(selectedThought.id) ? { 
-                    scale: [1, 1.2, 1, 1.15, 1],
-                    rotate: [0, -5, 5, -3, 0],
-                    boxShadow: [
-                      '0 0 0 0 rgba(239, 68, 68, 0)', 
-                      '0 0 20px 5px rgba(239, 68, 68, 0.4)', 
-                      '0 0 0 0 rgba(239, 68, 68, 0)'
-                    ]
-                  } : {}}
-                  transition={{ repeat: Infinity, repeatDelay: 2, duration: 0.8 }}
-                  className={`flex items-center gap-2 px-6 py-3 rounded-full transition-all cursor-pointer ${
-                    likedThoughts.has(selectedThought.id)
-                      ? 'bg-red-500 text-white shadow-lg shadow-red-500/50'
-                      : 'bg-red-500/20 text-white border-2 border-red-500/50 hover:bg-red-500 hover:border-red-500'
-                  }`}
-                >
-                  <Heart size={20} className={likedThoughts.has(selectedThought.id) ? 'fill-current' : 'animate-pulse'} />
-                  <span className="text-lg font-bold">{selectedThought.likes_count || 0}</span>
-                </motion.button>
+                {likedThoughts.has(selectedThought.id) ? (
+                  /* Liked state - subtle thank you badge */
+                  <span className="flex items-center gap-2 px-4 py-2 rounded-full text-red-300/80 bg-white/5">
+                    <Heart size={16} className="fill-current" />
+                    <span className="text-sm">Liked · {selectedThought.likes_count || 0}</span>
+                  </span>
+                ) : (
+                  /* Not liked - eye-catching CTA */
+                  <motion.button
+                    onClick={() => handleLike(selectedThought.id)}
+                    disabled={likingId === selectedThought.id}
+                    whileTap={{ scale: 0.9 }}
+                    animate={{ 
+                      scale: [1, 1.1, 1, 1.08, 1],
+                      y: [0, -3, 0, -2, 0],
+                    }}
+                    transition={{ repeat: Infinity, repeatDelay: 1.5, duration: 0.7 }}
+                    className="flex items-center gap-2 px-6 py-3 rounded-full cursor-pointer bg-gradient-to-r from-red-500 to-pink-500 text-white shadow-xl shadow-red-500/40 hover:shadow-2xl hover:shadow-red-500/50 hover:scale-105 transition-all"
+                  >
+                    <Heart size={20} className="animate-pulse" />
+                    <span className="text-lg font-bold">Like · {selectedThought.likes_count || 0}</span>
+                  </motion.button>
+                )}
               </div>
             </motion.div>
           </motion.div>

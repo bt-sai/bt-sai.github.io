@@ -306,27 +306,32 @@ export function Gallery() {
                 {/* Hover overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-midnight-900/80 via-transparent to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   {/* Like button with count */}
-                  <motion.button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleLike(thought.id);
-                    }}
-                    disabled={likedPhotos.has(thought.id) || likingId === thought.id}
-                    whileTap={{ scale: 0.9 }}
-                    animate={!likedPhotos.has(thought.id) ? { 
-                      scale: [1, 1.2, 1, 1.15, 1],
-                      rotate: [0, -5, 5, -3, 0],
-                    } : {}}
-                    transition={{ repeat: Infinity, repeatDelay: 2, duration: 0.8 }}
-                    className={`absolute top-3 right-3 flex items-center gap-1.5 px-3 py-1.5 rounded-full backdrop-blur-sm transition-all cursor-pointer ${
-                      likedPhotos.has(thought.id)
-                        ? 'bg-red-500 text-white shadow-lg shadow-red-500/50'
-                        : 'bg-red-500/30 text-white border border-red-500/50 hover:bg-red-500'
-                    }`}
-                  >
-                    <Heart size={14} className={likedPhotos.has(thought.id) ? 'fill-current' : 'animate-pulse'} />
-                    <span className="text-sm font-medium">{thought.likes_count || 0}</span>
-                  </motion.button>
+                  {likedPhotos.has(thought.id) ? (
+                    /* Liked state - subtle badge */
+                    <span className="absolute top-3 right-3 flex items-center gap-1 px-2 py-1 rounded-full text-red-300/80 bg-black/30 backdrop-blur-sm">
+                      <Heart size={12} className="fill-current" />
+                      <span className="text-xs">{thought.likes_count || 0}</span>
+                    </span>
+                  ) : (
+                    /* Not liked - eye-catching button */
+                    <motion.button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleLike(thought.id);
+                      }}
+                      disabled={likingId === thought.id}
+                      whileTap={{ scale: 0.9 }}
+                      animate={{ 
+                        scale: [1, 1.15, 1, 1.1, 1],
+                        y: [0, -2, 0, -1, 0],
+                      }}
+                      transition={{ repeat: Infinity, repeatDelay: 1.5, duration: 0.6 }}
+                      className="absolute top-3 right-3 flex items-center gap-1.5 px-3 py-1.5 rounded-full cursor-pointer bg-gradient-to-r from-red-500 to-pink-500 text-white shadow-lg shadow-red-500/40 hover:scale-110 transition-all"
+                    >
+                      <Heart size={14} className="animate-pulse" />
+                      <span className="text-sm font-semibold">{thought.likes_count || 0}</span>
+                    </motion.button>
+                  )}
                   
                   <div className="absolute bottom-0 left-0 right-0 p-3">
                     <div className="flex-1">
@@ -364,22 +369,25 @@ export function Gallery() {
                 {/* Hover overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-midnight-900/80 via-transparent to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   {/* Like button with count */}
-                  <motion.button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleLike(thought.id);
-                    }}
-                    disabled={likedPhotos.has(thought.id) || likingId === thought.id}
-                    whileTap={{ scale: 0.9 }}
-                    className={`absolute top-3 right-3 flex items-center gap-1.5 px-3 py-1.5 rounded-full backdrop-blur-sm transition-all cursor-pointer ${
-                      likedPhotos.has(thought.id)
-                        ? 'bg-red-500 text-white shadow-lg shadow-red-500/50'
-                        : 'bg-red-500/30 text-white border border-red-500/50 hover:bg-red-500'
-                    }`}
-                  >
-                    <Heart size={14} className={likedPhotos.has(thought.id) ? 'fill-current' : 'animate-pulse'} />
-                    <span className="text-sm font-medium">{thought.likes_count || 0}</span>
-                  </motion.button>
+                  {likedPhotos.has(thought.id) ? (
+                    <span className="absolute top-3 right-3 flex items-center gap-1 px-2 py-1 rounded-full text-red-300/80 bg-black/30 backdrop-blur-sm">
+                      <Heart size={12} className="fill-current" />
+                      <span className="text-xs">{thought.likes_count || 0}</span>
+                    </span>
+                  ) : (
+                    <motion.button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleLike(thought.id);
+                      }}
+                      disabled={likingId === thought.id}
+                      whileTap={{ scale: 0.9 }}
+                      className="absolute top-3 right-3 flex items-center gap-1.5 px-3 py-1.5 rounded-full cursor-pointer bg-gradient-to-r from-red-500 to-pink-500 text-white shadow-lg shadow-red-500/40 hover:scale-110 transition-all"
+                    >
+                      <Heart size={14} className="animate-pulse" />
+                      <span className="text-sm font-semibold">{thought.likes_count || 0}</span>
+                    </motion.button>
+                  )}
                   
                   <div className="absolute bottom-0 left-0 right-0 p-3">
                     <div className="flex-1">
@@ -481,32 +489,32 @@ export function Gallery() {
                     })}
                   </p>
                   {/* Like button in lightbox */}
-                  <motion.button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleLike(selectedThought.id);
-                    }}
-                    disabled={likedPhotos.has(selectedThought.id) || likingId === selectedThought.id}
-                    whileTap={{ scale: 0.9 }}
-                    animate={!likedPhotos.has(selectedThought.id) ? { 
-                      scale: [1, 1.2, 1, 1.15, 1],
-                      rotate: [0, -5, 5, -3, 0],
-                      boxShadow: [
-                        '0 0 0 0 rgba(239, 68, 68, 0)', 
-                        '0 0 20px 5px rgba(239, 68, 68, 0.4)', 
-                        '0 0 0 0 rgba(239, 68, 68, 0)'
-                      ]
-                    } : {}}
-                    transition={{ repeat: Infinity, repeatDelay: 2, duration: 0.8 }}
-                    className={`flex items-center gap-2 px-6 py-3 rounded-full transition-all cursor-pointer ${
-                      likedPhotos.has(selectedThought.id)
-                        ? 'bg-red-500 text-white shadow-lg shadow-red-500/50'
-                        : 'bg-red-500/20 text-white border-2 border-red-500/50 hover:bg-red-500 hover:border-red-500'
-                    }`}
-                  >
-                    <Heart size={20} className={likedPhotos.has(selectedThought.id) ? 'fill-current' : 'animate-pulse'} />
-                    <span className="text-lg font-bold">{selectedThought.likes_count || 0}</span>
-                  </motion.button>
+                  {likedPhotos.has(selectedThought.id) ? (
+                    /* Liked state - subtle thank you badge */
+                    <span className="flex items-center gap-2 px-4 py-2 rounded-full text-red-300/80 bg-white/5">
+                      <Heart size={16} className="fill-current" />
+                      <span className="text-sm">Liked · {selectedThought.likes_count || 0}</span>
+                    </span>
+                  ) : (
+                    /* Not liked - eye-catching CTA */
+                    <motion.button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleLike(selectedThought.id);
+                      }}
+                      disabled={likingId === selectedThought.id}
+                      whileTap={{ scale: 0.9 }}
+                      animate={{ 
+                        scale: [1, 1.1, 1, 1.08, 1],
+                        y: [0, -3, 0, -2, 0],
+                      }}
+                      transition={{ repeat: Infinity, repeatDelay: 1.5, duration: 0.7 }}
+                      className="flex items-center gap-2 px-6 py-3 rounded-full cursor-pointer bg-gradient-to-r from-red-500 to-pink-500 text-white shadow-xl shadow-red-500/40 hover:shadow-2xl hover:shadow-red-500/50 hover:scale-105 transition-all"
+                    >
+                      <Heart size={20} className="animate-pulse" />
+                      <span className="text-lg font-bold">Like · {selectedThought.likes_count || 0}</span>
+                    </motion.button>
+                  )}
                 </div>
               </div>
             </motion.div>
