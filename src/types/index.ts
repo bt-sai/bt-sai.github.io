@@ -13,7 +13,6 @@ export interface PersonalInfo {
   readonly name: string;
   readonly title: string;
   readonly email: string;
-  readonly phone: string;
   readonly location: string;
   readonly summary: string;
   readonly socialLinks: readonly SocialLink[];
@@ -95,5 +94,29 @@ export interface NavItem {
   readonly id: string;
   readonly label: string;
   readonly href: string;
+}
+
+export interface Thought {
+  readonly id: number;
+  readonly content: string;
+  readonly source: 'manual' | 'linkedin' | 'x';
+  readonly external_url?: string;
+  readonly image_url?: string;
+  readonly is_visible: boolean;
+  readonly likes_count: number;
+  readonly created_by?: number;
+  readonly created_at: string;
+  readonly updated_at?: string;
+}
+
+export interface ThoughtLike {
+  readonly id: number;
+  readonly thought_id: number;
+  readonly visitor_fingerprint: string;
+  readonly created_at: string;
+}
+
+export interface VisitorCount {
+  readonly total_visitors: number;
 }
 

@@ -44,7 +44,7 @@ export function Button({
   return (
     <button
       className={cn(
-        'inline-flex items-center justify-center gap-2 font-medium rounded-lg transition-all duration-200',
+        'inline-flex items-center justify-center gap-2 font-medium rounded-lg transition-all duration-200 cursor-pointer',
         'focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-500 focus-visible:ring-offset-2 focus-visible:ring-offset-midnight-900',
         'disabled:opacity-50 disabled:cursor-not-allowed',
         variantStyles[variant],
@@ -80,7 +80,7 @@ export function LinkButton({
     <a
       href={href}
       className={cn(
-        'inline-flex items-center justify-center gap-2 font-medium rounded-lg transition-all duration-200',
+        'inline-flex items-center justify-center gap-2 font-medium rounded-lg transition-all duration-200 cursor-pointer',
         'focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-500 focus-visible:ring-offset-2 focus-visible:ring-offset-midnight-900',
         variantStyles[variant],
         sizeStyles[size],

@@ -16,7 +16,6 @@ export const portfolioData: PortfolioData = {
     name: 'Tarun Sai',
     title: 'Senior Applied AI Scientist',
     email: 'tarunsaib1997@gmail.com',
-    phone: '+91-707-522-0608',
     location: 'Bengaluru, India',
     summary: `Passionate AI/ML professional with expertise in building production-grade machine learning systems. 
     Specialized in conversational AI, recommendation systems, and real-time ML applications. 
@@ -29,7 +28,7 @@ export const portfolioData: PortfolioData = {
       },
       {
         name: 'GitHub',
-        url: 'https://github.com/tarunsai',
+        url: 'https://github.com/bt-sai',
         icon: 'github',
       },
       {
@@ -279,6 +278,7 @@ export const navItems: readonly NavItem[] = [
   { id: 'education', label: 'Education', href: '#education' },
   { id: 'publications', label: 'Publications', href: '#publications' },
   { id: 'skills', label: 'Skills', href: '#skills' },
+  { id: 'gallery', label: 'Gallery', href: '#gallery' },
   { id: 'contact', label: 'Contact', href: '#contact' },
 ] as const;
 

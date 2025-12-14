@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Send } from 'lucide-react';
+import { Mail, MapPin, Send } from 'lucide-react';
 import { portfolioData } from '../../data/portfolio';
 import { Section, Card, LinkButton } from '../ui';
 
@@ -16,12 +16,6 @@ export function Contact() {
       label: 'Email',
       value: personalInfo.email,
       href: `mailto:${personalInfo.email}`,
-    },
-    {
-      icon: Phone,
-      label: 'Phone',
-      value: personalInfo.phone,
-      href: `tel:${personalInfo.phone.replace(/[^+\d]/g, '')}`,
     },
     {
       icon: MapPin,
@@ -44,13 +38,13 @@ export function Contact() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center text-lg text-midnight-300 mb-10"
+          className="text-center text-lg text-midnight-300 mb-6"
         >
           Interested in collaborating or discussing AI/ML opportunities? Feel free to reach out!
         </motion.p>
 
         {/* Contact Cards - Horizontal Layout */}
-        <div className="grid sm:grid-cols-3 gap-4 mb-10">
+        <div className="grid sm:grid-cols-2 gap-3 mb-6">
           {contactMethods.map((method, index) => (
             <Card key={method.label} glass hover={!!method.href} delay={index * 0.1}>
               {method.href ? (

@@ -23,7 +23,7 @@ export function Education() {
       title="Education"
       subtitle="Academic Background"
     >
-      <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
+      <div className="grid md:grid-cols-2 gap-4 lg:gap-6">
         {education.map((edu, index) => {
           const colors = collegeColors[edu.institution] || { bg: '#003366', accent: '#ffd700' };
           
@@ -120,7 +120,7 @@ export function Education() {
           Research Projects
         </h3>
         
-        <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
+        <div className="grid md:grid-cols-2 gap-4 lg:gap-6">
           {portfolioData.projects.map((project, index) => (
             <Card key={project.id} glass hover delay={index * 0.15}>
               <Badge variant="teal" className="mb-4">{project.type}</Badge>

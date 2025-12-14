@@ -64,7 +64,7 @@ export function Experience() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: '-100px' }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className={`relative mb-12 md:mb-16 md:w-1/2 ${
+              className={`relative mb-8 md:mb-10 md:w-1/2 ${
                 index % 2 === 0 ? 'md:pr-12' : 'md:pl-12 md:ml-auto'
               }`}
             >

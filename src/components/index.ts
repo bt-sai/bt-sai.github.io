@@ -9,6 +9,7 @@ export {
   Publications,
   Skills,
   Contact,
+  Gallery,
 } from './sections';
 
 // UI components
