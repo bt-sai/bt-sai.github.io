@@ -912,17 +912,17 @@ export function AdminThoughts() {
                   if (!showPage) return null;
                   
                   return (
-                    <button
-                      key={page}
-                      onClick={() => setCurrentPage(page)}
+                  <button
+                    key={page}
+                    onClick={() => setCurrentPage(page)}
                       className={`w-10 h-10 rounded-lg text-sm font-medium transition-colors cursor-pointer ${
-                        currentPage === page
-                          ? 'bg-accent-500 text-midnight-950'
-                          : 'bg-midnight-800 text-midnight-300 hover:bg-midnight-700'
-                      }`}
-                    >
-                      {page}
-                    </button>
+                      currentPage === page
+                        ? 'bg-accent-500 text-midnight-950'
+                        : 'bg-midnight-800 text-midnight-300 hover:bg-midnight-700'
+                    }`}
+                  >
+                    {page}
+                  </button>
                   );
                 })}
               </div>
