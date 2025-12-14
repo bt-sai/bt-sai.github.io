@@ -136,6 +136,11 @@ body {
   border-color: var(--border-color);
 }
 
+/* Border with themed styling */
+.border-3 {
+  border-width: 3px;
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
@@ -160,13 +165,13 @@ body {
   color: var(--color-accent-900);
 }
 
-/* Gradient Text */
+/* Gradient Text - using 500 colors for better visibility */
 .gradient-text {
   background: linear-gradient(
     135deg,
-    var(--color-accent-400),
-    var(--color-coral-400),
-    var(--color-teal-400)
+    var(--color-accent-500),
+    var(--color-coral-500),
+    var(--color-teal-500)
   );
   background-size: 200% 200%;
   -webkit-background-clip: text;
@@ -180,6 +185,84 @@ body {
   backdrop-filter: blur(12px);
   background: var(--bg-card);
   border: 1px solid var(--border-color);
+}
+
+/* Hero Grid Layout - Side by Side */
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 1024px) {
+  .hero-grid {
+    grid-template-columns: 1fr 380px;
+    gap: 3rem;
+  }
+  
+  .hero-intro {
+    order: 1;
+  }
+  
+  .hero-thoughts {
+    order: 2;
+  }
+}
+
+.hero-intro {
+  order: 2;
+}
+
+.hero-thoughts {
+  order: 1;
+}
+
+/* Custom Scrollbar for Thoughts */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--text-faint);
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Hide scrollbar for Firefox */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--text-faint) transparent;
+}
+
+/* Hide scrollbar completely */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Infinite scroll animation */
+@keyframes scroll {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll linear infinite;
 }
 
 /* Animated Underline */
@@ -310,4 +393,56 @@ body {
 /* Card shadow in light mode */
 .light .card-hover:hover {
   box-shadow: 0 20px 40px -20px rgba(16, 42, 67, 0.2);
+}
+
+/* Additional light mode refinements */
+.light .shadow-accent-500\/30 {
+  --tw-shadow-color: rgba(240, 180, 41, 0.2);
+}
+
+.light .shadow-accent-500\/10 {
+  --tw-shadow-color: rgba(240, 180, 41, 0.08);
+}
+
+/* Smooth transitions for theme switching */
+.bg-themed-primary,
+.bg-themed-secondary,
+.bg-themed-card,
+.text-themed-primary,
+.text-themed-secondary,
+.text-themed-muted,
+.text-themed-faint,
+.border-themed {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Better button states in light mode */
+.light .hover\:bg-red-500\/10:hover {
+  background-color: rgba(239, 68, 68, 0.1);
+}
+
+.light .bg-red-500\/20 {
+  background-color: rgba(239, 68, 68, 0.15);
+}
+
+.light .from-red-500\/20 {
+  --tw-gradient-from: rgba(239, 68, 68, 0.15);
+}
+
+.light .to-pink-500\/20 {
+  --tw-gradient-to: rgba(236, 72, 153, 0.15);
+}
+
+/* Gradient text in light mode - keep it vibrant */
+.light .gradient-text {
+  background: linear-gradient(
+    135deg,
+    var(--color-accent-600),
+    var(--color-coral-600),
+    var(--color-teal-600)
+  );
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }

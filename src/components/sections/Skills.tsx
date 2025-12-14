@@ -64,7 +64,7 @@ export function Skills() {
       subtitle="Technical Expertise"
     >
       {/* Skills Grid */}
-      <div className="grid md:grid-cols-2 gap-6 lg:gap-8 mb-16">
+      <div className="grid md:grid-cols-2 gap-4 lg:gap-6 mb-10">
         {skills.map((category, index) => (
           <Card key={category.category} glass hover delay={index * 0.1}>
             {/* Category Header */}

@@ -24,6 +24,18 @@ export function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileMenuOpen]);
+
   const handleNavClick = (href: string) => {
     setIsMobileMenuOpen(false);
     const element = document.querySelector(href);
@@ -62,7 +74,7 @@ export function Header() {
               transition={{ delay: index * 0.1 }}
               onClick={() => handleNavClick(item.href)}
               className={cn(
-                'text-sm font-medium transition-colors animated-underline',
+                'text-sm font-medium transition-colors animated-underline cursor-pointer',
                 activeSection === item.id
                   ? 'text-accent-400'
                   : 'text-midnight-300 hover:text-midnight-100'
@@ -97,16 +109,30 @@ export function Header() {
         </div>
       </div>
 
+      {/* Mobile Menu Backdrop */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="md:hidden fixed inset-0 top-0 bg-midnight-950/50 backdrop-blur-sm z-[-1]"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+        )}
+      </AnimatePresence>
+
       {/* Mobile Menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden glass mt-3"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className="md:hidden absolute left-4 right-4 top-full mt-2 glass rounded-xl shadow-2xl overflow-hidden"
           >
-            <nav className="flex flex-col p-4">
+            <nav className="flex flex-col py-2">
               {navItems.map((item, index) => (
                 <motion.button
                   key={item.id}
@@ -115,9 +141,9 @@ export function Header() {
                   transition={{ delay: index * 0.05 }}
                   onClick={() => handleNavClick(item.href)}
                   className={cn(
-                    'py-3 text-left text-base font-medium transition-colors',
+                    'py-4 px-6 text-left text-base font-medium transition-colors active:bg-white/10 touch-manipulation cursor-pointer',
                     activeSection === item.id
-                      ? 'text-accent-400'
+                      ? 'text-accent-400 bg-accent-500/10'
                       : 'text-midnight-300'
                   )}
                 >

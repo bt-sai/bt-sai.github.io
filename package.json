@@ -6,7 +6,7 @@
   "description": "Personal portfolio website for Tarun Sai - Senior Applied AI Scientist",
   "author": "Tarun Sai <tarunsaib1997@gmail.com>",
   "license": "MIT",
-  "homepage": "https://tarunsaib1997.github.io/",
+  "homepage": "https://bt-sai.github.io/",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -17,6 +17,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@fingerprintjs/fingerprintjs": "^5.0.1",
     "@fontsource/jetbrains-mono": "^5.2.8",
     "@fontsource/space-grotesk": "^5.2.10",
     "@iconify/react": "^6.0.2",

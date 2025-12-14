@@ -38,6 +38,10 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          VITE_XANO_BASE_URL: ${{ secrets.VITE_XANO_BASE_URL }}
+          VITE_XANO_FILE_BASE_URL: ${{ secrets.VITE_XANO_FILE_BASE_URL }}
+          VITE_XANO_API_GROUP: ${{ secrets.VITE_XANO_API_GROUP }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v4

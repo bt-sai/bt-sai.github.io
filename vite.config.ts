@@ -5,7 +5,7 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   // Base URL for GitHub Pages deployment
-  // Using '/' for user site (tarunsaib1997.github.io)
+  // Using '/' for user site (bt-sai.github.io)
   base: '/',
   build: {
     // Generate source maps for production debugging
