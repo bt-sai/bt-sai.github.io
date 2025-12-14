@@ -82,9 +82,9 @@ export function Hero() {
 
   const THOUGHTS_PER_PAGE = 20;
 
-  // Filter function
+  // Filter function - only show thoughts with text content (image-only posts go to Gallery)
   const filterThoughts = useCallback((data: Thought[]) => data.filter(t => 
-    (t.content && t.content.trim() !== '') || (t.image_url && t.image_url.trim() !== '')
+    t.content && t.content.trim() !== ''
   ), []);
 
   // Initialize fingerprint (async with FingerprintJS)
