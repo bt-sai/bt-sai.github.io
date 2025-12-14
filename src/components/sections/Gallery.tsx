@@ -74,10 +74,13 @@ export function Gallery() {
     fetchThoughtsWithImages();
   }, [fetchThoughtsWithImages]);
 
-  // Detect manual scroll
+  // Track if user is actively touching (for mobile)
+  const isTouchingRef = useRef(false);
+
+  // Detect manual scroll (only when not touching - to avoid conflicts on mobile)
   const handleScroll = useCallback(() => {
     const container = scrollContainerRef.current;
-    if (!container) return;
+    if (!container || isTouchingRef.current) return;
     
     const scrollDiff = Math.abs(container.scrollLeft - lastScrollLeftRef.current);
     
@@ -92,7 +95,7 @@ export function Gallery() {
       
       // After 5 seconds of no manual scrolling, return to auto mode
       manualScrollTimeoutRef.current = setTimeout(() => {
-        if (!isHovering) {
+        if (!isHovering && !isTouchingRef.current) {
           setIsManualScrollMode(false);
           // Reset scroll to start for smooth auto-scroll restart
           if (container) {
@@ -161,8 +164,17 @@ export function Gallery() {
   };
 
   // Touch handlers (mobile)
-  const handleTouchStart = () => setIsHovering(true);
+  const handleTouchStart = () => {
+    isTouchingRef.current = true;
+    setIsHovering(true);
+    setIsManualScrollMode(true);
+    if (manualScrollTimeoutRef.current) {
+      clearTimeout(manualScrollTimeoutRef.current);
+    }
+  };
+  
   const handleTouchEnd = () => {
+    isTouchingRef.current = false;
     // Resume auto-scroll after 3 seconds of no touch
     if (manualScrollTimeoutRef.current) {
       clearTimeout(manualScrollTimeoutRef.current);
